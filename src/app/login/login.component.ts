@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   logIn() {
     for (let i = 0; i < this.validUsers.length; i++) {
       if (this.userName == this.validUsers[i].userName) {
+        localStorage.setItem('userName', JSON.stringify(this.userName));
         this.router.navigateByUrl('dashboard');
       } else {
         this.errorMessage = "Error: User does not exist."

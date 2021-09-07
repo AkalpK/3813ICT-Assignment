@@ -12,5 +12,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  logOut() {
+    localStorage.clear();
+    console.log('Local storage cleared.')
+  }
 
 }

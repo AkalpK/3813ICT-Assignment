@@ -14,9 +14,9 @@
     <form class="form-horizontal mx-auto text-center" role="form" style="width: 200px">
         <div class="form-group " >
            <label for="userName"></label>
-           <input type="text" [(ngModel)]="userName" class="form-control" id="userName" name="userName" placeholder="Enter username">
+           <input type="text" [(ngModel)]="userName" class="form-control" id="userName" name="userName">
       </div>
-        <button (click)="logIn()" class="btn btn-primary">Enter</button>
+        <button (click)="logIn()" class="btn btn-outline-primary">Enter</button>
             <small *ngIf="errorMessage" class="form-text text-danger">{{errorMessage}}</small>
     </form>
 
