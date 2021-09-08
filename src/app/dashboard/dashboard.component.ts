@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { groups } from '../global-variables';
+import { SocketService } from '../service/socket.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,14 +9,31 @@ import { groups } from '../global-variables';
 })
 export class DashboardComponent implements OnInit {
 
-  groupsList = groups;
+  messageContent: string = "";
+  messages: string[] = [];
+  database: any;
 
-  constructor() { }
+  ioConnection: any;
+
+  constructor(private socketService: SocketService) { }
 
   ngOnInit(): void {
+    this.initIoConnection();
   }
+
+  // Clears local storage on logout.
   logOut() {
     localStorage.clear();
   }
+
+  private initIoConnection() {
+    this.socketService.initSocket();
+    this.ioConnection = this.socketService.onMessage().subscribe(
+      (message:string) => {
+        // Add new message to the messages array.
+        this.messages.push(message);
+      });
+  }
+
 
 }

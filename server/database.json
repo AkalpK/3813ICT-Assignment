@@ -1,0 +1,62 @@
+{
+    "users": [
+        {"userName": "AkaK",
+            "email": "abc@gmail.com",
+            "id": "0001",
+            "role": "Super Admin"},
+        
+            {"userName": "Mickey",
+            "email": "mickeyODST@gmail.com",
+            "id": "0002",
+            "role": "Group Admin"},
+        
+            {"userName": "Romeo",
+            "email": "RomeoODST@gmail.com",
+            "id": "0003",
+            "role": "Group Assis"},
+        
+            {"userName": "Buck",
+            "email": "BuckODST@gmail.com",
+            "id": "0004",
+            "role": "User"},
+        
+            {"userName": "Rookie",
+            "email": "RookieODST@gmail.com",
+            "id": "0005",
+            "role": "User"},
+        
+            {"userName": "Dutch",
+            "email": "DutchODST@gmail.com",
+            "id": "0006",
+            "role": "User"}
+    ],
+
+    "groups": [
+        {
+            "groupName": "Springsteen Fans",
+            "members": "AkaK"
+        },
+        {
+            "groupName": "Joni Mitchell Appreciation Club",
+            "members": ["Mickey", "Dutch"]
+        },
+        {
+            "groupName": "Pearl Jam Lovers",
+            "members": ["Mickey"]
+        }
+    ],
+
+    "rooms": [
+        {
+            "roomName": "Clarence Appreciation",
+            "belongsToGroup": "Springsteen Fans",
+            "accessibleTo": ["AkaK"]
+        },
+        {
+            "roomName": "Song to a Seagull",
+            "belongsToGroup": "Joni Mitchell Appreciation Club",
+            "accessibleTo": ["Mickey"]
+        }
+    ]
+
+}

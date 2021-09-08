@@ -9,6 +9,7 @@ const SERVER_URL= "http://localhost:3000";
 export class SocketService {
 
   private socket: any;
+  database: any;
 
   constructor() { }
 
@@ -28,8 +29,20 @@ export class SocketService {
   // Listen for 'message' events from the socket server.
   public onMessage(): Observable<any> {
     let observable = new Observable(observer => {
-      this.socket.on('mesage', (data:string) => observer.next(data));
+      this.socket.on('message', (data:string) => observer.next(data));
     });
     return observable;
+  }
+
+  public pullDatabase() {
+    return new Observable(observer => {
+      this.socket.on('database', (data: any) => {
+        observer.next(data);
+      })
+    })
+  }
+
+  public requestDatabase() {
+    this.socket.emit('databaseRequest', 'Request');
   }
 }
