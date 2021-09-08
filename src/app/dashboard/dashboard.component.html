@@ -12,7 +12,7 @@
     <title>Dashboard</title>
 </head>
     <body>
-        <nav class="navbar navbar-expand navbar-light bg-light">
+        <nav class="navbar navbar-expand navbar-light bg-light mt-4">
             <div class="navbar-header">
                 <a class="navbar display-4">Dashboard</a>
             </div>
@@ -24,5 +24,13 @@
                 </li>
             </ul>
         </nav>
+        <div class="container-fluid">
+            <p class="display-6 mt-5 ml-4">Groups</p>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let group of groupsList; let i = index">
+                    {{ group.groupName}}
+                </li>
+            </ul>
+        </div>
     </body>
 </html>

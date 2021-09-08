@@ -8,13 +8,14 @@ import { groups } from '../global-variables';
 })
 export class DashboardComponent implements OnInit {
 
+  groupsList = groups;
+
   constructor() { }
 
   ngOnInit(): void {
   }
   logOut() {
     localStorage.clear();
-    console.log('Local storage cleared.')
   }
 
 }

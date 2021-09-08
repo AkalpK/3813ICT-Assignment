@@ -34,14 +34,17 @@ export const users = [
 export const groups = [
     {
         groupName: "Springsteen Fans",
-        rooms: ["1", "2", "3"]
+        rooms: ["1", "2", "3"],
+        allowedUsers: ["AkaK", "Mickey"]
     },
     {
         groupName: "Joni Mitchell Appreciation Club",
-        rooms: ["1"]
+        rooms: ["1"],
+        allowedUsers: ["AkaK", "Mickey"]
     },
     {
         groupName: "Pearl Jam Lovers",
-        rooms: ["1", "2"]
+        rooms: ["1", "2"],
+        allowedUsers: ["AkaK", "Mickey"]
     }
 ];
