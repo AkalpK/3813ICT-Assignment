@@ -34,15 +34,18 @@
     "groups": [
         {
             "groupName": "Springsteen Fans",
-            "members": "AkaK"
+            "members": ["AkaK"],
+            "ownedRooms": ["Clarence Appreciation"]
         },
         {
             "groupName": "Joni Mitchell Appreciation Club",
-            "members": ["Mickey", "Dutch"]
+            "members": ["Mickey", "Dutch"],
+            "ownedRooms": ["Song to a Seagull"]
         },
         {
             "groupName": "Pearl Jam Lovers",
-            "members": ["Mickey"]
+            "members": ["Mickey"],
+            "ownedRooms": []
         }
     ],
 

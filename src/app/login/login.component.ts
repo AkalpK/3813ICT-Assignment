@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { SocketService } from '../service/socket.service';
 import { io } from 'socket.io-client';
 import { CommonModule } from '@angular/common';
+import { DatabaseFilterService } from '../service/database-filter.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,11 +16,12 @@ export class LoginComponent implements OnInit {
   // Variable for storing global user data. 
   userName = ""; // Variable for storing user input.
   errorMessage = ""; // Message to inform user their credentials are incorrect.
+  groups: any;
   database: any;
   ioConnection: any;
-  brother: any;
 
-  constructor(private router: Router, private socketService: SocketService) { }
+
+  constructor(private router: Router, private socketService: SocketService, private databaseFilter: DatabaseFilterService) { }
 
   ngOnInit(): void {
     this.initIoConnection();
@@ -29,7 +32,8 @@ export class LoginComponent implements OnInit {
   logIn() {
     for (let i = 0; i < this.database.users.length; i++) {
       if (this.userName == this.database.users[i].userName) {
-        localStorage.setItem('userName', JSON.stringify(this.userName));
+        localStorage.setItem("loggedUser", JSON.stringify(this.userName));
+        this.databaseFilter.setDatabase(this.database);
         this.router.navigateByUrl('dashboard');
       } else {
         this.errorMessage = "Error: User does not exist."
@@ -40,6 +44,7 @@ export class LoginComponent implements OnInit {
   private initIoConnection() {
     this.socketService.initSocket();
     this.socketService.requestDatabase();
+    this.socketService.pullDatabase();
     this.ioConnection = this.socketService.pullDatabase().subscribe(
       (data:any) => {
         this.database = data;

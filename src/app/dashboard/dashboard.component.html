@@ -8,7 +8,6 @@
     <!-- Link bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
     
-    <link rel="stylesheet" type="text/css" href="C:\Users\aka_k\Documents\BachelorOfInformationTechnology\SoftwareFrameworks\Assignments\AssignmentPhaseOne\src\assets\styles\dashboard.css">
     <title>Dashboard</title>
 </head>
     <body>
@@ -25,9 +24,15 @@
             </ul>
         </nav>
         <div class="container-fluid">
-            <p class="display-6 mt-5 ml-4">Groups</p>
+            <p class="display-6 mt-5 ml-4" >Groups</p>
             <ul class="list-group">
-                <li class="list-group-item">
+                <li *ngFor="let group of groups; let i = index" class="list-group-item">
+                    
+                    <ul>
+                        <li *ngFor="let room of rooms; let i = index" class="list-group-item">
+                            
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

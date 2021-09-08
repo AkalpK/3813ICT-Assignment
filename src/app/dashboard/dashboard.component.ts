@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../service/socket.service';
-import { FormsModule } from '@angular/forms';
+import { DatabaseFilterService } from '../service/database-filter.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,16 +9,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
 
-  messageContent: string = "";
+  currentUser : any = localStorage.getItem("loggedUser");
   messages: string[] = [];
-  database: any;
+  database : string[] = [];
+  groups = new Map<string, Array<string>>();
+  rooms: string[] = [];
 
   ioConnection: any;
 
-  constructor(private socketService: SocketService) { }
+  constructor(private socketService: SocketService, private databaseFilter: DatabaseFilterService) { }
 
   ngOnInit(): void {
+    console.log("test");
+
     this.initIoConnection();
+    this.currentUser = JSON.parse(this.currentUser);
+
   }
 
   // Clears local storage on logout.
@@ -26,13 +32,20 @@ export class DashboardComponent implements OnInit {
     localStorage.clear();
   }
 
-  private initIoConnection() {
+  public initIoConnection() {
     this.socketService.initSocket();
-    this.ioConnection = this.socketService.onMessage().subscribe(
-      (message:string) => {
-        // Add new message to the messages array.
-        this.messages.push(message);
-      });
+    this.socketService.requestDatabase();
+    this.socketService.pullDatabase();
+    this.ioConnection = this.socketService.pullDatabase().subscribe(
+      (data:any) => {
+        for (let i = 0; i < data.groups.length; i++) {
+
+          if (data.groups[i].members.includes(this.currentUser)){
+            this.groups.set(data.groups[i].groupName, data.groups[i].ownedRooms);
+          }
+        }
+      }
+    );
   }
 
 
