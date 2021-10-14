@@ -10,13 +10,16 @@
     <title>Login</title>
 </head>
 <body>
-    <h1 class="container-fluid text-center display-2">Enter your username</h1>
+    <h1 class="container-fluid text-center display-2">Log-in</h1>
     <form class="form-horizontal mx-auto text-center" role="form" style="width: 200px">
-        <div class="form-group " >
-           <label for="userName"></label>
-           <input type="text" [(ngModel)]="userName" class="form-control" id="userName" name="userName">
-        </div>
-        <button (click)="logIn()" class="btn btn-outline-primary">Enter</button>
+      <div class="form-group ">
+        <label for="username">Username:</label>
+        <input type="text" [(ngModel)]="currentUser.userName" class="form-control" id="username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" [(ngModel)]="currentUser.password" class="form-control" id="password" name="password">
+
+      </div>
+        <button (click)="validateUser()" class="btn btn-outline-primary">Enter</button>
             <small *ngIf="errorMessage" class="form-text text-danger">{{errorMessage}}</small>
     </form>
 </body>

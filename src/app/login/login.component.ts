@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocketService } from '../service/socket.service';
 import { io } from 'socket.io-client';
 import { CommonModule } from '@angular/common';
-import { DatabaseFilterService } from '../service/database-filter.service';
-
+import { UserDataService } from '../service/user-data.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-login',
@@ -12,45 +11,37 @@ import { DatabaseFilterService } from '../service/database-filter.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  // Object for storing user information.
+  currentUser: User = {
+    _id: "",
+    userName: "",
+    password: "",
+    email: "",
+    role: ""
+  };
 
-  // Variable for storing global user data. 
-  userName = ""; // Variable for storing user input.
   errorMessage = ""; // Message to inform user their credentials are incorrect.
-  groups: any;
-  database: any;
-  ioConnection: any;
 
-
-  constructor(private router: Router, private socketService: SocketService, private databaseFilter: DatabaseFilterService) { }
+  constructor(private userDataService: UserDataService, private router: Router) {}
 
   ngOnInit(): void {
-    this.initIoConnection();
-    
-  }
-
-  // Function for testing username is valid and redirecting to dashboard.
-  logIn() {
-    for (let i = 0; i < this.database.users.length; i++) {
-      if (this.userName == this.database.users[i].userName) {
-        localStorage.setItem("loggedUser", JSON.stringify(this.userName));
-        this.databaseFilter.setDatabase(this.database);
-        this.router.navigateByUrl('dashboard');
-      } else {
-        this.errorMessage = "Error: User does not exist."
-      }
+    if (localStorage.getItem('userID')) {
+      this.router.navigateByUrl('dashboard');
     }
   }
+  // Use getAllUsers() method from userDataService to return a list of all users from database and check if the user entered form data is valid. 
+  validateUser(): void {
+    this.userDataService.getAllUsers().subscribe(data => {
+      data.forEach((data: User) => {
+        if (data.userName == this.currentUser.userName && data.password == this.currentUser.password) {
+          localStorage.setItem("userID", JSON.stringify(data._id));
+          this.router.navigateByUrl('dashboard');
+        } else {
+          this.errorMessage = "Incorrect username or password.";
+        }
+      })
+    })
 
-  private initIoConnection() {
-    this.socketService.initSocket();
-    this.socketService.requestDatabase();
-    this.socketService.pullDatabase();
-    this.ioConnection = this.socketService.pullDatabase().subscribe(
-      (data:any) => {
-        this.database = data;
-        
-      }
-    );
   }
 
 }

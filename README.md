@@ -1,29 +1,27 @@
-# Documentation
+# AssignmentPhaseOne
 
-This project is my submission for the 3813ICT - Software Frameworks Assignment Phase One. Author: Aka Karadeniz.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.2.
 
-## Git
+## Development server
 
-Since this project is meant to be undertaken alone, I used Git as a means of backing up my files. I aimed to commit changes every time I made a meaningful and functioning addition to the code. This meant that there was always a safe backup of an up-to-date and working version of the code. The layout of my Git repository is meant to simply reflect my project directory; i.e., all files and folders are in an identical hierarchy, where the 'src' folder is for client-side files and the 'server' foldier is for server-side. The only exception to this: the node_modules folder for both the client and server-side were not included in this repository as they are too large. This is not a concern since they can easily be installed with NPM by referencing the package.json file in the root folder.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Data Structures
+## Code scaffolding
 
-The users and groups are all part of a single JSON file named database.json. This is not the most efficient way of handling the data but I used it as a stopgap for the duration of the assignment. The database.json file includes three seperate arrays called users, groups, and rooms.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-| Users | Groups | Rooms |
-|-------|--------|-------|
-| userName | groupName | roomName |
-| Email | members | belongsToGroup |
-| ID | | ownedRooms | ownedRooms |
-| Role| | |
+## Build
 
-The table above shows the variables stored for each separate JSON object. Currently, the Users object is used to determine if a user exists (in order to login), Groups is used  to iterate through all the groups and find all the groups which the user is within (by checking the members array) and printing the groupName, and Rooms is currently unused.
-## REST API
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-The principles of REST API are unfortunately not utilized to the fullest possible extent here. As there is a single .json file, the server only listens for a single request, which is for event name 'databaseRequest'. In response to this request, the server sends the database file which is read on startup using socket.io.emit, which automatically decodes the file. The server constantly listens for this request and fulfills it whenever it's heard.
+## Running unit tests
 
-## Angular Architecture
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-The project is split into two components: **login**, and **dashboard**. 
+## Running end-to-end tests
 
-Traffic is redirected from the root path to Login through the app-routing module and serves as the entry point for users. After being successfuly authorised, the Login component routes the user to Dashboard, where all the main functionalities are executed. There are two services, SocketService, and DatabaseFilterService (not currently functioning). The SocketService handles all communication between the server and client side. I was experimented with DatabaseFilterService as a means of sorting through the data but I found it to be unecessarily complicated. The reality is, the database should be separated into more .JSON files instead of using a service that breaks up the same work into much more. There are no custom models.
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

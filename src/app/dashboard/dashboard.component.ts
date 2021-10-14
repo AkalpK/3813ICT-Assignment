@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../service/socket.service';
-import { DatabaseFilterService } from '../service/database-filter.service';
+import { UserDataService } from '../service/user-data.service';
+import { Router } from '@angular/router';
+import { Group } from '../model/group.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,22 +11,16 @@ import { DatabaseFilterService } from '../service/database-filter.service';
 })
 export class DashboardComponent implements OnInit {
 
-  currentUser : any = localStorage.getItem("loggedUser");
-  messages: string[] = [];
-  database : string[] = [];
-  groups = new Map<string, Array<string>>();
-  rooms: string[] = [];
+  userId: any = localStorage.getItem("userID"); // Get the user information
+  groups: Group[] = []; // For storing all Group objects.
 
-  ioConnection: any;
-
-  constructor(private socketService: SocketService, private databaseFilter: DatabaseFilterService) { }
+  constructor(private userDataService: UserDataService, private socketService: SocketService) { }
 
   ngOnInit(): void {
-    console.log("test");
-
-    this.initIoConnection();
-    this.currentUser = JSON.parse(this.currentUser);
-
+    this.userId = JSON.parse(this.userId);
+    this.userDataService.getGroups(this.userId).subscribe(data => {
+      this.groups = data;
+    })
   }
 
   // Clears local storage on logout.
@@ -32,21 +28,6 @@ export class DashboardComponent implements OnInit {
     localStorage.clear();
   }
 
-  public initIoConnection() {
-    this.socketService.initSocket();
-    this.socketService.requestDatabase();
-    this.socketService.pullDatabase();
-    this.ioConnection = this.socketService.pullDatabase().subscribe(
-      (data:any) => {
-        for (let i = 0; i < data.groups.length; i++) {
-
-          if (data.groups[i].members.includes(this.currentUser)){
-            this.groups.set(data.groups[i].groupName, data.groups[i].ownedRooms);
-          }
-        }
-      }
-    );
-  }
 
 
 }
