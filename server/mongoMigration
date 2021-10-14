@@ -1,0 +1,36 @@
+ db.createCollection('users', {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ['userName', 'email', 'id', 'role'],
+      properties: {
+        name: {
+          bsonType: 'string',
+          description: 'Required; string'
+        },
+        email: {
+          bsonType: 'string',
+          pattern: '^.+@.+$',
+          description: 'Required; string; email'
+        },
+        Role: {
+          enum: ['standard', 'superAdmin', 'groupAdmin','groupAssis'],
+          description: 'Must match specified roles'
+        }
+      }
+    } 
+  }
+})
+
+
+  private initIoConnection() {
+    this.socketService.initSocket();
+    this.socketService.requestDatabase();
+    this.socketService.pullDatabase();
+    this.ioConnection = this.socketService.pullDatabase().subscribe(
+      (data:any) => {
+        this.database = data;
+        
+      }
+    );
+  }
